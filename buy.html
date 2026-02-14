@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy — FTX2.0</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Jupiter Plugin -->
+  <script src="https://plugin.jup.ag/plugin-v1.js" data-preload defer></script>
+</head>
+
+<body class="min-h-screen bg-[#0b0f18] text-zinc-100">
+
+  <!-- Background -->
+  <div class="fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#101a2d] via-[#0b0f18] to-black"></div>
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 h-[520px] w-[900px] rounded-full blur-3xl opacity-25 bg-cyan-500"></div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-4 py-10 md:py-14">
+    <header class="flex items-center justify-between gap-4 flex-wrap">
+      <div class="text-2xl md:text-3xl font-semibold tracking-wide">FTX2.0</div>
+
+      <div class="flex gap-2 flex-wrap">
+        <a
+          href="/"
+          class="px-4 py-2 rounded-xl bg-black/60 border border-white/10 hover:bg-black/80 transition"
+        >
+          Back
+        </a>
+
+        <a
+          href="https://dexscreener.com/solana/7djmtwe8nnbvpd9tgawpd6k1j3hr7jxw5d4oyjyttjaa"
+          target="_blank"
+          rel="noreferrer"
+          class="px-4 py-2 rounded-xl bg-black/60 border border-white/10 hover:bg-black/80 transition"
+        >
+          Dexscreener
+        </a>
+      </div>
+    </header>
+
+    <section class="mt-10 rounded-3xl bg-white/5 border border-white/10 p-6 md:p-8">
+      <div class="flex items-start justify-between gap-6 flex-wrap">
+        <div>
+          <div class="text-xs text-zinc-400">BUY</div>
+          <h1 class="mt-2 text-3xl md:text-4xl font-semibold">Swap SOL → FTX2.0</h1>
+          <p class="mt-2 text-sm text-zinc-400 font-mono break-all">
+            Output mint: ANVWi3AAkjXRnesAMtAQNRPcrhSnKKbQwsRVe7xpump
+          </p>
+        </div>
+
+        <a
+          href="https://jup.ag/"
+          target="_blank"
+          rel="noreferrer"
+          class="px-4 py-2 rounded-xl bg-black/60 border border-white/10 hover:bg-black/80 transition"
+        >
+          Open Jupiter
+        </a>
+      </div>
+
+      <!-- Jupiter: wrapper = EXACT same size as plugin containerStyles (flush) -->
+      <div class="mt-8 flex justify-center">
+        <div
+          class="rounded-3xl border border-white/10 bg-[#0f172a] overflow-hidden"
+          style="width: 720px; max-width: 100%;"
+        >
+          <!-- This is the target container that Jupiter will style -->
+          <div id="jupiter-plugin"></div>
+        </div>
+      </div>
+
+      <div class="mt-6 text-xs text-zinc-500">
+        Tip: if you’re on a small screen, the swap will scale down responsively.
+      </div>
+    </section>
+
+    <footer class="mt-12 pt-6 border-t border-white/10 text-xs text-zinc-500">
+      Uses Jupiter Plugin. Not affiliated.
+    </footer>
+  </main>
+
+  <script>
+    const SOL_MINT = "So11111111111111111111111111111111111111112";
+    const OUT_MINT = "ANVWi3AAkjXRnesAMtAQNRPcrhSnKKbQwsRVe7xpump";
+
+    window.addEventListener("load", () => {
+      if (!window.Jupiter || typeof window.Jupiter.init !== "function") return;
+
+      window.Jupiter.init({
+        displayMode: "integrated",
+        integratedTargetId: "jupiter-plugin",
+        theme: "dark",
+        containerStyles: {
+          width: "720px",
+          height: "720px",
+          borderRadius: "24px",
+          overflow: "hidden"
+        },
+        formProps: {
+          initialInputMint: SOL_MINT,
+          initialOutputMint: OUT_MINT,
+          fixedMint: OUT_MINT
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
