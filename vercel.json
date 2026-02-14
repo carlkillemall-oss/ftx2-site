@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/buy", "destination": "/buy.html" },
+    { "source": "/fees", "destination": "/fees.html" },
+    { "source": "/buy/", "destination": "/buy.html" },
+    { "source": "/fees/", "destination": "/fees.html" }
+  ],
+  "redirects": [
+    { "source": "/buy.html", "destination": "/buy", "permanent": true },
+    { "source": "/fees.html", "destination": "/fees", "permanent": true }
+  ]
+}
+
