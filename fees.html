@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Creator Fees Tracker — FTX2.0</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.png">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -40,9 +42,7 @@
     <!-- TITLE -->
     <section class="mt-10 rounded-3xl bg-white/5 border border-white/10 p-7 md:p-10">
       <div class="text-xs text-zinc-400">TRACKER</div>
-      <h1 class="mt-2 text-3xl md:text-4xl font-semibold">
-        Creator Fees Tracker
-      </h1>
+      <h1 class="mt-2 text-3xl md:text-4xl font-semibold">Creator Fees Tracker</h1>
 
       <p class="mt-3 text-sm text-zinc-400">
         Tracks Pump.fun creator rewards (USD total across tokens) + on-chain SOL balance.
@@ -70,14 +70,12 @@
       <div id="solUpdated" class="mt-2 text-xs text-zinc-500">Updated —</div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="mt-12 pt-6 border-t border-white/10 text-xs text-zinc-500">
-      Not affiliated. Uses Pump.fun public endpoints and public Solana RPC.
+      Not affiliated. Uses Pump.fun public endpoints (via site proxy) and public Solana RPC.
     </footer>
 
   </main>
 
-  <!-- Shared Button Style -->
   <style>
     .btn{
       padding: 0.5rem 1rem;
@@ -113,9 +111,8 @@
         let totalUsd = 0;
 
         while (true) {
-          const res = await fetch(
-            `https://profile-api.pump.fun/balance/tokens/${WALLET}?page=${page}&size=50`
-          );
+          // IMPORTANT: use our same-origin proxy (avoids CORS)
+          const res = await fetch(`/api/pump/balance/tokens/${WALLET}?page=${page}&size=50`);
           const data = await res.json();
 
           if (!data?.success) break;
@@ -144,7 +141,6 @@
       const solEl = document.getElementById("solBalance");
       const updatedEl = document.getElementById("solUpdated");
 
-      // Browser-friendly RPCs (CORS usually OK) + fallback
       const RPCS = [
         "https://solana-rpc.publicnode.com",
         "https://rpc.ankr.com/solana",
@@ -173,9 +169,7 @@
             updatedEl.textContent = "Updated " + nowStr();
             return;
           }
-        } catch (e) {
-          // try next rpc
-        }
+        } catch (e) {}
       }
 
       solEl.textContent = "Error loading";
