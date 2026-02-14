@@ -1,13 +1,17 @@
 {
-  "rewrites": [
-    { "source": "/buy", "destination": "/buy.html" },
-    { "source": "/fees", "destination": "/fees.html" },
-    { "source": "/buy/", "destination": "/buy.html" },
-    { "source": "/fees/", "destination": "/fees.html" }
+  "version": 2,
+  "builds": [
+    { "src": "**/*", "use": "@vercel/static" }
   ],
-  "redirects": [
-    { "source": "/buy.html", "destination": "/buy", "permanent": true },
-    { "source": "/fees.html", "destination": "/fees", "permanent": true }
+  "routes": [
+    { "src": "^/buy/?$", "dest": "/buy.html" },
+    { "src": "^/fees/?$", "dest": "/fees.html" },
+
+    { "src": "^/buy\\.html$", "status": 308, "headers": { "Location": "/buy" } },
+    { "src": "^/fees\\.html$", "status": 308, "headers": { "Location": "/fees" } },
+
+    { "handle": "filesystem" },
+    { "src": ".*", "dest": "/index.html" }
   ]
 }
 
