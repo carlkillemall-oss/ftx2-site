@@ -4,14 +4,13 @@
     { "src": "**/*", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "^/api/pump/balance/tokens/(.*)$", "dest": "https://profile-api.pump.fun/balance/tokens/$1" },
+
     { "src": "^/buy/?$", "dest": "/buy.html" },
     { "src": "^/fees/?$", "dest": "/fees.html" },
 
     { "src": "^/buy\\.html$", "status": 308, "headers": { "Location": "/buy" } },
     { "src": "^/fees\\.html$", "status": 308, "headers": { "Location": "/fees" } },
-
-    /* Proxy Pump.fun API (avoids browser CORS) */
-    { "src": "^/api/pump/balance/tokens/(.*)$", "dest": "https://profile-api.pump.fun/balance/tokens/$1" },
 
     { "handle": "filesystem" },
     { "src": ".*", "dest": "/index.html" }
