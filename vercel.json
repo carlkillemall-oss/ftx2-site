@@ -8,9 +8,13 @@
 
     { "src": "^/buy/?$", "dest": "/buy.html" },
     { "src": "^/fees/?$", "dest": "/fees.html" },
+    
+    { "src": "^/perps/?$", "dest": "/perps.html" },
+    { "src": "^/perps\\.html$", "status": 308, "headers": { "Location": "/perps" } },
 
     { "src": "^/buy\\.html$", "status": 308, "headers": { "Location": "/buy" } },
     { "src": "^/fees\\.html$", "status": 308, "headers": { "Location": "/fees" } },
+    { "src": "^/_perps/(.*)$", "dest": "https://ftx2-perps.vercel.app/$1" },
 
     { "handle": "filesystem" },
     { "src": ".*", "dest": "/index.html" }
