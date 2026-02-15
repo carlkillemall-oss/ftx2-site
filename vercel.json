@@ -1,16 +1,26 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/perps",
-      "destination": "https://ftx2-perps.vercel.app"
+      "src": "^/_perps/_next/(.*)$",
+      "dest": "https://ftx2-perps.vercel.app/_next/$1"
     },
     {
-      "source": "/perps/:path*",
-      "destination": "https://ftx2-perps.vercel.app/:path*"
+      "src": "^/_perps/(.*)$",
+      "dest": "https://ftx2-perps.vercel.app/$1"
+    },
+
+    {
+      "src": "^/perps/?$",
+      "dest": "/perps.html"
     },
     {
-      "source": "/_next/:path*",
-      "destination": "https://ftx2-perps.vercel.app/_next/:path*"
+      "src": "^/perps\\.html$",
+      "status": 308,
+      "headers": { "Location": "/perps" }
+    },
+
+    {
+      "handle": "filesystem"
     }
   ]
 }
