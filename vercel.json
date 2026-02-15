@@ -1,27 +1,36 @@
 {
+  "version": 2,
   "routes": [
-    {
-      "src": "^/_perps/_next/(.*)$",
-      "dest": "https://ftx2-perps.vercel.app/_next/$1"
-    },
-    {
-      "src": "^/_perps/(.*)$",
-      "dest": "https://ftx2-perps.vercel.app/$1"
-    },
+    /* =========================
+       DRIFT (Next.js) PROXY
+       ========================= */
 
-    {
-      "src": "^/perps/?$",
-      "dest": "/perps.html"
-    },
-    {
-      "src": "^/perps\\.html$",
-      "status": 308,
-      "headers": { "Location": "/perps" }
-    },
+    /* Drift assets are always requested from /_next/... (root) */
+    { "src": "^/_next/(.*)$", "dest": "https://ftx2-perps.vercel.app/_next/$1" },
 
-    {
-      "handle": "filesystem"
-    }
+    /* Optional: forward a few common public files used by Next apps */
+    { "src": "^/favicon\\.ico$", "dest": "https://ftx2-perps.vercel.app/favicon.ico" },
+    { "src": "^/robots\\.txt$", "dest": "https://ftx2-perps.vercel.app/robots.txt" },
+    { "src": "^/sitemap\\.xml$", "dest": "https://ftx2-perps.vercel.app/sitemap.xml" },
+
+    /* Serve Drift pages under /_perps/... (same-domain source for iframe) */
+    { "src": "^/_perps/(.*)$", "dest": "https://ftx2-perps.vercel.app/$1" },
+
+    /* =========================
+       CLEAN URLS (STATIC HTML)
+       ========================= */
+    { "src": "^/buy/?$", "dest": "/buy.html" },
+    { "src": "^/fees/?$", "dest": "/fees.html" },
+    { "src": "^/perps/?$", "dest": "/perps.html" },
+
+    { "src": "^/buy\\.html$", "status": 308, "headers": { "Location": "/buy" } },
+    { "src": "^/fees\\.html$", "status": 308, "headers": { "Location": "/fees" } },
+    { "src": "^/perps\\.html$", "status": 308, "headers": { "Location": "/perps" } },
+
+    { "src": "^/$", "dest": "/index.html" },
+
+    { "handle": "filesystem" },
+    { "src": ".*", "dest": "/index.html" }
   ]
 }
 
