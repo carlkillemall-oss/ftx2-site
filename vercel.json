@@ -4,27 +4,16 @@
     { "src": "**/*", "use": "@vercel/static" }
   ],
   "routes": [
-    /* Pump.fun API proxy (fees page) */
     { "src": "^/api/pump/balance/tokens/(.*)$", "dest": "https://profile-api.pump.fun/balance/tokens/$1" },
-
-    /* Drift Next.js assets (requested at root /_next/...) */
     { "src": "^/_next/(.*)$", "dest": "https://ftx2-perps.vercel.app/_next/$1" },
-
-    /* Drift app under /_perps/... */
     { "src": "^/_perps/(.*)$", "dest": "https://ftx2-perps.vercel.app/$1" },
-
-    /* Clean URLs -> static HTML */
     { "src": "^/buy/?$", "dest": "/buy.html" },
     { "src": "^/fees/?$", "dest": "/fees.html" },
     { "src": "^/perps/?$", "dest": "/perps.html" },
-
-    /* Redirect .html -> clean URLs */
     { "src": "^/buy\\.html$", "status": 308, "headers": { "Location": "/buy" } },
     { "src": "^/fees\\.html$", "status": 308, "headers": { "Location": "/fees" } },
     { "src": "^/perps\\.html$", "status": 308, "headers": { "Location": "/perps" } },
-
     { "src": "^/$", "dest": "/index.html" },
-
     { "handle": "filesystem" },
     { "src": ".*", "dest": "/index.html" }
   ]
