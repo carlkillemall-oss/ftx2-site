@@ -1,19 +1,21 @@
 {
   "version": 2,
+  "builds": [
+    { "src": "**/*", "use": "@vercel/static" }
+  ],
   "routes": [
     /* =========================
-       DRIFT (Next.js) PROXY
+       PUMP.FUN API PROXY (fees)
        ========================= */
+    { "src": "^/api/pump/balance/tokens/(.*)$", "dest": "https://profile-api.pump.fun/balance/tokens/$1" },
 
-    /* Drift assets are always requested from /_next/... (root) */
+    /* =========================
+       DRIFT (Next.js) PROXY
+       IMPORTANT: Drift loads chunks from /_next/... (root path)
+       ========================= */
     { "src": "^/_next/(.*)$", "dest": "https://ftx2-perps.vercel.app/_next/$1" },
 
-    /* Optional: forward a few common public files used by Next apps */
-    { "src": "^/favicon\\.ico$", "dest": "https://ftx2-perps.vercel.app/favicon.ico" },
-    { "src": "^/robots\\.txt$", "dest": "https://ftx2-perps.vercel.app/robots.txt" },
-    { "src": "^/sitemap\\.xml$", "dest": "https://ftx2-perps.vercel.app/sitemap.xml" },
-
-    /* Serve Drift pages under /_perps/... (same-domain source for iframe) */
+    /* Drift app served under /_perps/... for iframe widget */
     { "src": "^/_perps/(.*)$", "dest": "https://ftx2-perps.vercel.app/$1" },
 
     /* =========================
