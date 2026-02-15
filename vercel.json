@@ -1,23 +1,17 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "**/*", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "^/api/pump/balance/tokens/(.*)$", "dest": "https://profile-api.pump.fun/balance/tokens/$1" },
-
-    { "src": "^/buy/?$", "dest": "/buy.html" },
-    { "src": "^/fees/?$", "dest": "/fees.html" },
-    
-    { "src": "^/perps/?$", "dest": "/perps.html" },
-    { "src": "^/perps\\.html$", "status": 308, "headers": { "Location": "/perps" } },
-
-    { "src": "^/buy\\.html$", "status": 308, "headers": { "Location": "/buy" } },
-    { "src": "^/fees\\.html$", "status": 308, "headers": { "Location": "/fees" } },
-    { "src": "^/_perps/(.*)$", "dest": "https://ftx2-perps.vercel.app/$1" },
-
-    { "handle": "filesystem" },
-    { "src": ".*", "dest": "/index.html" }
+  "rewrites": [
+    {
+      "source": "/perps",
+      "destination": "https://ftx2-perps.vercel.app"
+    },
+    {
+      "source": "/perps/:path*",
+      "destination": "https://ftx2-perps.vercel.app/:path*"
+    },
+    {
+      "source": "/_next/:path*",
+      "destination": "https://ftx2-perps.vercel.app/_next/:path*"
+    }
   ]
 }
 
