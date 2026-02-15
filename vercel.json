@@ -1,38 +1,32 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "**/*", "use": "@vercel/static" }
+  "redirects": [
+    { "source": "/buy.html", "destination": "/buy", "permanent": true },
+    { "source": "/fees.html", "destination": "/fees", "permanent": true },
+    { "source": "/perps.html", "destination": "/perps", "permanent": true }
   ],
-  "routes": [
-    /* =========================
-       PUMP.FUN API PROXY (fees)
-       ========================= */
-    { "src": "^/api/pump/balance/tokens/(.*)$", "dest": "https://profile-api.pump.fun/balance/tokens/$1" },
+  "rewrites": [
+    /* Pump.fun API proxy (fees page) */
+    {
+      "source": "/api/pump/balance/tokens/:path*",
+      "destination": "https://profile-api.pump.fun/balance/tokens/:path*"
+    },
 
-    /* =========================
-       DRIFT (Next.js) PROXY
-       IMPORTANT: Drift loads chunks from /_next/... (root path)
-       ========================= */
-    { "src": "^/_next/(.*)$", "dest": "https://ftx2-perps.vercel.app/_next/$1" },
+    /* Drift Next.js assets MUST be reachable at root /_next/... */
+    {
+      "source": "/_next/:path*",
+      "destination": "https://ftx2-perps.vercel.app/_next/:path*"
+    },
 
-    /* Drift app served under /_perps/... for iframe widget */
-    { "src": "^/_perps/(.*)$", "dest": "https://ftx2-perps.vercel.app/$1" },
+    /* Drift app under /_perps/... (for iframe same-domain) */
+    {
+      "source": "/_perps/:path*",
+      "destination": "https://ftx2-perps.vercel.app/:path*"
+    },
 
-    /* =========================
-       CLEAN URLS (STATIC HTML)
-       ========================= */
-    { "src": "^/buy/?$", "dest": "/buy.html" },
-    { "src": "^/fees/?$", "dest": "/fees.html" },
-    { "src": "^/perps/?$", "dest": "/perps.html" },
-
-    { "src": "^/buy\\.html$", "status": 308, "headers": { "Location": "/buy" } },
-    { "src": "^/fees\\.html$", "status": 308, "headers": { "Location": "/fees" } },
-    { "src": "^/perps\\.html$", "status": 308, "headers": { "Location": "/perps" } },
-
-    { "src": "^/$", "dest": "/index.html" },
-
-    { "handle": "filesystem" },
-    { "src": ".*", "dest": "/index.html" }
+    /* Clean URLs for your static HTML pages */
+    { "source": "/buy", "destination": "/buy.html" },
+    { "source": "/fees", "destination": "/fees.html" },
+    { "source": "/perps", "destination": "/perps.html" }
   ]
 }
 
