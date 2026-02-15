@@ -4,16 +4,34 @@
     { "src": "**/*", "use": "@vercel/static" }
   ],
   "routes": [
+    {
+      "src": "^/_next/(.*)$",
+      "has": [{ "type": "host", "value": "lend.f-tx.net" }],
+      "dest": "https://app.marginfi.com/_next/$1"
+    },
+    {
+      "src": "^/(.*)$",
+      "has": [{ "type": "host", "value": "lend.f-tx.net" }],
+      "dest": "https://app.marginfi.com/$1"
+    },
+
     { "src": "^/api/pump/balance/tokens/(.*)$", "dest": "https://profile-api.pump.fun/balance/tokens/$1" },
+
     { "src": "^/_next/(.*)$", "dest": "https://ftx2-perps.vercel.app/_next/$1" },
     { "src": "^/_perps/(.*)$", "dest": "https://ftx2-perps.vercel.app/$1" },
+
     { "src": "^/buy/?$", "dest": "/buy.html" },
     { "src": "^/fees/?$", "dest": "/fees.html" },
     { "src": "^/perps/?$", "dest": "/perps.html" },
+    { "src": "^/lend/?$", "dest": "/lend.html" },
+
     { "src": "^/buy\\.html$", "status": 308, "headers": { "Location": "/buy" } },
     { "src": "^/fees\\.html$", "status": 308, "headers": { "Location": "/fees" } },
     { "src": "^/perps\\.html$", "status": 308, "headers": { "Location": "/perps" } },
+    { "src": "^/lend\\.html$", "status": 308, "headers": { "Location": "/lend" } },
+
     { "src": "^/$", "dest": "/index.html" },
+
     { "handle": "filesystem" },
     { "src": ".*", "dest": "/index.html" }
   ]
